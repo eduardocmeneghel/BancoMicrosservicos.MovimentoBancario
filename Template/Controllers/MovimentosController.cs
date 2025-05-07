@@ -7,11 +7,11 @@ namespace ContaBancaria.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContasController : ControllerBase
+    public class MovimentosController : ControllerBase
     {
         private readonly MovimentoDomain _movimentoDomain;
 
-        public ContasController()
+        public MovimentosController()
         {
             _movimentoDomain = new MovimentoDomain();
         }
@@ -27,7 +27,7 @@ namespace ContaBancaria.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
         }
 
@@ -42,7 +42,7 @@ namespace ContaBancaria.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
         }
 
@@ -58,7 +58,7 @@ namespace ContaBancaria.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(e.Message);
             }
         }
     }
