@@ -1,6 +1,7 @@
 ﻿using ContaBancaria;
 using Exemplo;
 using MovimentoBancaria;
+using MovimentoBancaria.Servicos;
 using Template.Infra;
 
 namespace Servicos
@@ -8,14 +9,28 @@ namespace Servicos
     public class MovimentoDomain
     {
         public DataContext _dataContext;
+        public ContaClient _contaClient;
 
         public MovimentoDomain()
         {
             _dataContext = GeradorDeServicos.CarregarContexto();
+            _contaClient = new ContaClient();
         }
 
         public void Saque(InserirMovimentoDTO dadosDoSaque)
         {
+            var conta = _contaClient.BuscarConta(dadosDoSaque.CodigoConta);
+
+            if (conta == null)
+            {
+                throw new Exception("Conta não encontrada.");
+            }
+
+            if (!conta.Ativo)
+            {
+                throw new Exception("A conta está inativa");
+            }
+
             var movimento = new Movimento();
 
             movimento.CodigoConta = dadosDoSaque.CodigoConta;
